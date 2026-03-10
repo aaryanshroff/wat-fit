@@ -72,6 +72,8 @@ for r in history:
 # Format email
 lines = ["CURRENT OCCUPANCY", ""]
 for name, pct in facilities:
+    if name not in tracked:
+        continue
     short = SHORT_NAMES.get(name, name)
     bar = "█" * (pct // 5) + "░" * (20 - pct // 5)
     lines.append(f"  {bar} {pct:3d}%  {short}")
