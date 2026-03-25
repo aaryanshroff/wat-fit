@@ -108,35 +108,6 @@ if hour_scores:
             short = SHORT_NAMES.get(name, name)
             lines.append(f"        {short}: {avg}%")
         lines.append("")
-else:
-    # Log why the "best times" section was omitted.
-    if not tracked:
-        print("Best times omitted: no tracked facilities configured.")
-    elif not upcoming_hours:
-        print("Best times omitted: no upcoming hours left today.")
-    else:
-        missing_tracked = [name for name in tracked if name not in col_names]
-        if missing_tracked:
-            print(
-                "Best times omitted: tracked facilities not found in CSV header: "
-                + ", ".join(missing_tracked)
-            )
-        else:
-            any_bucket = False
-            for hour in upcoming_hours:
-                key = (today_dow, hour)
-                for name in tracked:
-                    if averages[key][name]:
-                        any_bucket = True
-                        break
-                if any_bucket:
-                    break
-            if not any_bucket:
-                print(
-                    "Best times omitted: no historical data for today's weekday in upcoming hours."
-                )
-            else:
-                print("Best times omitted: unknown reason (hour scores empty).")
 
 body = "\n".join(lines)
 print(body)
